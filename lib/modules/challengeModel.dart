@@ -6,6 +6,7 @@ class ChallengeModel
   String? image;
   String? title;
   String? date;
+
   String? comment;
 
 
