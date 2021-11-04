@@ -1,13 +1,9 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
-import 'package:todo/layouts/Counter/counter_Screen.dart';
 import 'package:todo/layouts/Home/homeScreen.dart';
 import 'package:todo/shared/bloc_observer.dart';
 
-import 'Other small apps/FirstScreenChallenge.dart';
-import 'Other small apps/animated.dart';
-import 'Other small apps/challengeLayout.dart';
-import 'Other small apps/easeanimation.dart';
+
 
 void main() {
   Bloc.observer = MyBlocObserver();
