@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_conditional_rendering/conditional.dart';
 import 'package:todo/models/archived.dart';
-import 'package:todo/models/descriptionScreen.dart';
 import 'package:todo/models/done.dart';
 import 'package:todo/models/tasks.dart';
 import 'package:todo/shared/CubitTodo/cubit.dart';
@@ -36,7 +35,6 @@ Widget deafultFormField({
 
 Widget BuildTaskItem(Map model,context)=>InkWell(
   onTap: (){
-NavigateTo(context, description());
   },
   child:   Dismissible(
 
@@ -185,7 +183,29 @@ NavigateTo(context, description());
 
         alignment: Alignment.centerRight
 
-    )
+    ),
+    confirmDismiss: (DismissDirection direction) async {
+      return await showDialog(
+        barrierDismissible: true,
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: const Text("Confirm"),
+            content: const Text("Are you sure you want to delete this task?"),
+            actions: <Widget>[
+              MaterialButton(
+                  onPressed: ()=> Navigator.of(context).pop(true),
+                  child: const Text("DELETE")
+              ),
+              MaterialButton(
+                onPressed: () => Navigator.of(context).pop(false),
+                child: const Text("CANCEL"),
+              ),
+            ],
+          );
+        },
+      );
+    },
 
   ),
 );
