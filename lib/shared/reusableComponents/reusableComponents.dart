@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_conditional_rendering/conditional.dart';
 import 'package:todo/models/archived.dart';
+import 'package:todo/models/descriptionScreen.dart';
 import 'package:todo/models/done.dart';
 import 'package:todo/models/tasks.dart';
 import 'package:todo/shared/CubitTodo/cubit.dart';
@@ -33,117 +34,160 @@ Widget deafultFormField({
 
 );
 
-Widget BuildTaskItem(Map model,context)=>Dismissible(
-  key: Key(model['id'].toString()),
-  child:  Padding(
-    padding: const EdgeInsets.all(15.0),
-    child: Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        CircleAvatar(
-          radius: 40.0,
-          child: Text(
-            '${model['time']}',
-            style: TextStyle(
-                color: Colors.white,
-                fontSize: 20.0
-            ),
-          ),
-        ),
+Widget BuildTaskItem(Map model,context)=>InkWell(
+  onTap: (){
+NavigateTo(context, description());
+  },
+  child:   Dismissible(
 
-        SizedBox(
-          width: 20.0,
-        ),
-        Expanded(
-          child: Column(
-            children: [
-              Text(
-                '${model['title']}',
-                style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 30.0
-                ),
+    key: Key(model['id'].toString()),
+
+    child:  Padding(
+
+      padding: const EdgeInsets.all(15.0),
+
+      child: Row(
+
+        crossAxisAlignment: CrossAxisAlignment.start,
+
+        children: [
+
+          CircleAvatar(
+
+            radius: 40.0,
+
+            child: Text(
+
+              '${model['time']}',
+
+              style: TextStyle(
+
+                  color: Colors.white,
+
+                  fontSize: 20.0
+
               ),
 
-              Text(
-                '${model['date']}',
-                style: TextStyle(
-                    color: Colors.grey,
-                    fontSize: 15.0
-                ),
-
-              )
-
-            ],
-
-
+            ),
 
           ),
 
-        ),
 
-        SizedBox(
 
-          width: 20.0,
+          SizedBox(
 
-        ),
+            width: 20.0,
 
-        IconButton(
+          ),
 
-            onPressed:()
+          Expanded(
 
-            {
+            child: Column(
 
-              AppCubit.get(context).UpdateDatabase(status: 'done', id: model['id']);
+              children: [
 
-            },
+                Text(
 
-            icon: Icon(
+                  '${model['title']}',
 
-              Icons.check_box,
+                  style: TextStyle(
 
-              color: Colors.green,
+                      color: Colors.black,
 
-            )
+                      fontSize: 30.0
 
-        ),
+                  ),
 
-        IconButton(
+                ),
 
-            onPressed:()
 
-            {
 
-              AppCubit.get(context).UpdateDatabase(status: 'archived', id: model['id']);
+                Text(
 
-            },
+                  '${model['date']}',
 
-            icon: Icon(
+                  style: TextStyle(
 
-              Icons.archive,
+                      color: Colors.grey,
 
-              color: Colors.black38,
+                      fontSize: 15.0
 
-            )
+                  ),
 
-        ),
+                ),
 
-      ],
+                Text(
 
+                  '${model['description']}',
+
+                  style: TextStyle(
+
+                      color: Colors.black,
+
+                      fontSize: 10.0,
+                  ),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ],
+            ),
+          ),
+          SizedBox(
+            width: 20.0,
+          ),
+          IconButton(
+              onPressed:()
+              {
+                AppCubit.get(context).UpdateDatabase(status: 'done', id: model['id']);
+              },
+              icon: Icon(
+                Icons.check_box,
+                color: Colors.green,
+
+              )
+          ),
+
+
+
+          IconButton(
+              onPressed:()
+              {
+                AppCubit.get(context).UpdateDatabase(status: 'archived', id: model['id']);
+              },
+              icon: Icon(
+                Icons.archive,
+
+                color: Colors.black38,
+
+              )
+          ),
+        ],
+      ),
     ),
+
+    onDismissed: (direction)
+
+    {
+
+      AppCubit.get(context).DeleteDatabase(id: model['id']);
+
+    },
+
+    background: Container(
+
+      color: Colors.redAccent,
+
+      child: Icon(
+
+        Icons.delete
+
+      ),
+
+        alignment: Alignment.centerRight
+
+    )
 
   ),
-  onDismissed: (direction)
-  {
-    AppCubit.get(context).DeleteDatabase(id: model['id']);
-  },
-  background: Container(
-    color: Colors.redAccent,
-    child: Icon(
-      Icons.delete
-    ),
-      alignment: Alignment.centerRight
-  )
 );
 
 

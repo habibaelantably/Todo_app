@@ -27,8 +27,9 @@ class homeScreen extends StatelessWidget
   var ScaffoldKey = GlobalKey<ScaffoldState>();
   var FormKey = GlobalKey<FormState>();
   var TextController = TextEditingController();
-  var TimeController = TextEditingController();
-  var DateController = TextEditingController();
+  var timeController = TextEditingController();
+  var dateController = TextEditingController();
+  var descriptionController = TextEditingController();
 
   /*void initState() {
     super.initState();
@@ -91,8 +92,10 @@ class homeScreen extends StatelessWidget
                 if (FormKey.currentState!.validate()) {
                   cubit.InsertToDatabase(
                       title: TextController.text,
-                      date: DateController.text,
-                      time: TimeController.text);
+                      date: dateController.text,
+                      time: timeController.text,
+                      description: descriptionController.text
+                  );
                  /* InsertToDatabase(title: TextController.text,
                       time: TimeController.text,
                       date: DateController.text).then((value) {
@@ -125,15 +128,16 @@ class homeScreen extends StatelessWidget
                               label: 'text label',
                               prefix: Icons.title,
                             ),
+                            SizedBox(height: 15,),
                             deafultFormField(
-                              controller: TimeController,
+                              controller: timeController,
                               type: TextInputType.datetime,
                               OnTap: () {
                                 showTimePicker
                                   (context: context,
                                     initialTime: TimeOfDay.now())
                                     .then((value) {
-                                  TimeController.text =
+                                  timeController.text =
                                       value!.format(context).toString();
                                 });
                               },
@@ -146,9 +150,9 @@ class homeScreen extends StatelessWidget
                               label: 'time label',
                               prefix: Icons.title,
                             ),
-
+                            SizedBox(height: 15,),
                             deafultFormField(
-                              controller: DateController,
+                              controller: dateController,
                               type: TextInputType.datetime,
                               OnTap: () {
                                 showDatePicker(
@@ -157,7 +161,7 @@ class homeScreen extends StatelessWidget
                                   firstDate: DateTime.now(),
                                   lastDate: DateTime.parse('2022-09-04'),
                                 ).then((value) {
-                                  DateController.text =
+                                  dateController.text =
                                       DateFormat.yMMMd().format(value!);
                                 }
                                 );
@@ -170,6 +174,19 @@ class homeScreen extends StatelessWidget
                               },
                               label: 'date label',
                               prefix: Icons.title,
+                            ),
+                            SizedBox(height: 15,),
+                            deafultFormField(
+                              controller: descriptionController,
+                              type: TextInputType.text,
+                              validator: (String ? value) {
+                                if (value!.isEmpty) {
+                                  return 'value must not be empty';
+                                }
+                                return null;
+                              },
+                              label: 'description label',
+                              prefix: Icons.description_outlined,
                             )
                           ],
                         ),

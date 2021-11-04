@@ -6,6 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:todo/constants/constants.dart';
 import 'package:todo/models/archived.dart';
+import 'package:todo/models/descriptionScreen.dart';
 import 'package:todo/models/done.dart';
 import 'package:todo/models/tasks.dart';
 import 'package:todo/shared/CubitTodo/states.dart';
@@ -55,7 +56,7 @@ class AppCubit extends Cubit<AppStates>
         onCreate: (database, version) {
           print('database created');
           database.execute(
-              ' CREATE TABLE TASKS (id INTEGER PRIMARY KEY,title TEXT,date TEXT,time TEXT,status TEXT)')
+              ' CREATE TABLE TASKS (id INTEGER PRIMARY KEY,title TEXT,date TEXT,time TEXT,description TEXT,status TEXT)')
               .then((value) {
             print('table created');
           }).catchError((error) {
@@ -79,11 +80,14 @@ class AppCubit extends Cubit<AppStates>
    InsertToDatabase({
     required String title,
     required String date,
-    required String time}) async
+    required String time,
+    required String description
+
+   }) async
   {
     return await database!.transaction((txn) {
       return txn.rawInsert(
-          'INSERT INTO tasks (title,date,time,status) VALUES ("$title","$date","$time","new")')
+          'INSERT INTO tasks (title,date,time,description,status) VALUES ("$title","$date","$time","$description","new")')
           .then((value)
       {
         print('$value inserted successfully');
@@ -175,6 +179,11 @@ class AppCubit extends Cubit<AppStates>
     fabIcon=icons;
     emit(AppChangeBottomSheetState());
 
+  }
+
+  Future getdescription(Map model,context) async
+  {
+    return await('${model['description']}')  ;
   }
 
 }

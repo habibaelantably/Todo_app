@@ -4,10 +4,10 @@ import 'package:todo/layouts/Counter/counter_Screen.dart';
 import 'package:todo/layouts/Home/homeScreen.dart';
 import 'package:todo/shared/bloc_observer.dart';
 
-import 'models/FirstScreenChallenge.dart';
-import 'models/animated.dart';
-import 'models/challengeLayout.dart';
-import 'models/easeanimation.dart';
+import 'Other small apps/FirstScreenChallenge.dart';
+import 'Other small apps/animated.dart';
+import 'Other small apps/challengeLayout.dart';
+import 'Other small apps/easeanimation.dart';
 
 void main() {
   Bloc.observer = MyBlocObserver();
@@ -26,7 +26,7 @@ class MyApp extends StatelessWidget {
       ),
 
 
-      home: challengeLayout(),
+      home: homeScreen(),
     );
   }
 }
