@@ -175,7 +175,7 @@ class loginScreen extends StatelessWidget
                    Row(
                      mainAxisAlignment: MainAxisAlignment.center,
                      children: [
-                       Text('Dont`t have an account',
+                       Text('Don`t have an account',
                          style: TextStyle(
                            color: Colors.black,
                          ),
@@ -190,7 +190,8 @@ class loginScreen extends StatelessWidget
                                color: Colors.blue[700]
                              ),
                            )
-                       )
+                       ),
+
                      ],
                    )
                  ],

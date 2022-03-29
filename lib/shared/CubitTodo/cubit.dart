@@ -1,4 +1,5 @@
 
+
 import 'package:bloc/bloc.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -6,8 +7,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:todo/models/archived.dart';
 import 'package:todo/models/done.dart';
+import 'package:todo/models/local_notification.dart';
+import 'package:todo/models/settings.dart';
 import 'package:todo/models/tasks.dart';
 import 'package:todo/shared/CubitTodo/states.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 
 
 class AppCubit extends Cubit<AppStates>
@@ -30,11 +35,14 @@ class AppCubit extends Cubit<AppStates>
     tasksScreen(),
     doneScreen(),
     archivedScreen(),
+    SettingsScreen()
   ];
+
   List<String> titles = [
-    'tasks',
+    'tasks'
     'done',
-    'archived'
+    'archived',
+    'settings'
   ];
 
   void changeIndex(int index)
@@ -43,6 +51,8 @@ class AppCubit extends Cubit<AppStates>
     emit(AppChangeNavbarState());
 
   }
+
+
 
   void createDatabase()
   //async
@@ -89,12 +99,13 @@ class AppCubit extends Cubit<AppStates>
           .then((value)
       {
         print('$value inserted successfully');
+        DateTime dateTime = DateTime.parse("${date}T$time");
+        print(dateTime.toString());
+        NotificationApi.scheduledNotification(id: value, title: title, body: description, dateTime: dateTime);
         emit(AppInsertDatabaseState());
-
         getDataFromDatabase(database).then((value)
         {
           //tasks=value;print(tasks);
-
           emit(AppGetDatabaseState());
         });
 
@@ -173,7 +184,7 @@ class AppCubit extends Cubit<AppStates>
   required IconData icons,
 })
   {
-    isbottomsheet=isshow;
+    isbottomsheet= isshow;
     fabIcon=icons;
     emit(AppChangeBottomSheetState());
 

@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_conditional_rendering/conditional.dart';
+import 'package:todo/models/description.dart';
 import 'package:todo/shared/CubitTodo/cubit.dart';
 
 Widget deafultFormField({
@@ -31,6 +32,8 @@ Widget deafultFormField({
 
 Widget BuildTaskItem(Map model,context)=>InkWell(
   onTap: (){
+NavigateTo(context, descripton(model: model,));
+
   },
   child:   Dismissible(
 
@@ -269,7 +272,7 @@ Widget deafultbutton({
   Color? background ,
   bool IsUpperCase=true,
   //double radius=0.0,
-  dynamic ? buttonIcon,
+  dynamic  buttonIcon,
   required Function function,
   required String text,
 
@@ -301,6 +304,8 @@ void NavigateTo(context,widget) => Navigator.push(context,
     MaterialPageRoute(
         builder: (context)=> widget
     ));
+
+
 
 
 
